@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>General Knowledge Quiz — DecodeLabs P4</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<div class="page">
+  <div class="center-card">
+
+    <div class="brand-row">
+      <span class="brand-icon">🧠</span>
+      <div>
+        <div class="brand-name">General Knowledge Quiz</div>
+        <div class="brand-sub">DecodeLabs · Project 4 · Batch 2026</div>
+      </div>
+    </div>
+
+    <h1 class="hero-title">Test Your Knowledge</h1>
+    <p class="hero-sub">
+      {{ total }} questions across Geography, Science, Literature, and Technology.
+      Each answer is sanitized with <code>.strip().lower()</code> — case and spaces don't matter.
+    </p>
+
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon">⚡</div>
+        <div class="feature-title">Control Flow</div>
+        <div class="feature-desc">Every answer routes through an <code>if/else</code> logic gate</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🔢</div>
+        <div class="feature-title">Score Vault</div>
+        <div class="feature-desc"><code>score = 0</code> — integer accumulator, never resets mid-quiz</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🧹</div>
+        <div class="feature-title">Input Sanitization</div>
+        <div class="feature-desc"><code>.strip().lower()</code> — The Pro Recipe for fair grading</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">📤</div>
+        <div class="feature-title">f-string Output</div>
+        <div class="feature-desc"><code>f"Score: {score}/{total}"</code> — dynamic result display</div>
+      </div>
+    </div>
+
+    <a href="/quiz" class="btn-start">Start Quiz →</a>
+
+    <div class="ipos-bar">
+      <span class="ipos-step ipos-active">INPUT</span>
+      <span class="ipos-arrow">→</span>
+      <span class="ipos-step">PROCESS</span>
+      <span class="ipos-arrow">→</span>
+      <span class="ipos-step">OUTPUT</span>
+      <span class="ipos-arrow">→</span>
+      <span class="ipos-step">STORAGE</span>
+    </div>
+
+  </div>
+</div>
+</body>
+</html>
