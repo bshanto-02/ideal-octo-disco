@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Feedback — DecodeLabs Quiz</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<div class="page">
+  <div class="feedback-card {% if is_correct %}feedback-correct{% else %}feedback-wrong{% endif %}">
+
+    <!-- Result Icon -->
+    <div class="feedback-icon">{{ '✔' if is_correct else '✘' }}</div>
+
+    <h2 class="feedback-title">
+      {% if is_correct %}Correct!{% else %}Incorrect{% endif %}
+    </h2>
+
+    <!-- Question recap -->
+    <div class="feedback-q">{{ question.question }}</div>
+
+    <!-- IPOS: OUTPUT phase — f-string style result display -->
+    <div class="ipos-label">OUTPUT PHASE — Step 4: Execute Feedback</div>
+
+    <div class="feedback-table">
+      <div class="fb-row">
+        <span class="fb-key">Your answer</span>
+        <span class="fb-val {% if is_correct %}val-correct{% else %}val-wrong{% endif %}">
+          "{{ user_answer }}"
+        </span>
+      </div>
+      <div class="fb-row">
+        <span class="fb-key">Sanitized as</span>
+        <span class="fb-val val-code">"{{ user_answer.strip().lower() }}"</span>
+      </div>
+      <div class="fb-row">
+        <span class="fb-key">Correct answer</span>
+        <span class="fb-val val-correct">"{{ question.answers[0].title() }}"</span>
+      </div>
+      <div class="fb-row">
+        <span class="fb-key">f-string score</span>
+        <!-- Output Clarity: f"Score: {score:>2}/{total}" -->
+        <span class="fb-val val-code">f"Score: {{ '%2d' | format(score) }}/{{ total }}"  →  Score: {{ score }}/{{ total }}</span>
+      </div>
+    </div>
+
+    {% if not is_correct %}
+    <div class="hint-box">
+      💡 Hint: {{ question.hint }}
+    </div>
+    {% endif %}
+
+    <!-- Logic gate display -->
+    <div class="logic-box">
+      <div class="logic-title">Control Flow Execution</div>
+      <code>
+        sanitized = "{{ user_answer }}".strip().lower()  →  "{{ user_answer.strip().lower() }}"<br>
+        {% if is_correct %}
+        if sanitized == "{{ question.answers[0] }}":  →  <span class="logic-true">True → score += 1 ✔</span>
+        {% else %}
+        if sanitized == "{{ question.answers[0] }}":  →  <span class="logic-false">False → else branch ✘</span>
+        {% endif %}
+      </code>
+    </div>
+
+    <!-- Navigation -->
+    {% if more %}
+      <a href="/quiz" class="btn-next">Next Question →</a>
+    {% else %}
+      <a href="/results" class="btn-next">See Final Results →</a>
+    {% endif %}
+
+    <!-- IPOS Bar -->
+    <div class="ipos-bar">
+      <span class="ipos-step">INPUT</span>
+      <span class="ipos-arrow">→</span>
+      <span class="ipos-step">PROCESS</span>
+      <span class="ipos-arrow">→</span>
+      <span class="ipos-step ipos-active">OUTPUT</span>
+      <span class="ipos-arrow">→</span>
+      <span class="ipos-step">STORAGE</span>
+    </div>
+
+  </div>
+</div>
+</body>
+</html>
