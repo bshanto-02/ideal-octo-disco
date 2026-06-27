@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Results — DecodeLabs Quiz</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<div class="page">
+  <div class="results-card">
+
+    <div class="results-header">
+      <div class="results-icon">🏁</div>
+      <h1 class="results-title">Quiz Complete!</h1>
+      <div class="results-sub">DecodeLabs · Project 4 · Batch 2026</div>
+    </div>
+
+    <!-- Final Score — f-string Output Clarity standard -->
+    <div class="score-vault">
+      <div class="score-label-text">FINAL SCORE</div>
+      <div class="score-big {{ css }}">{{ score_display }}</div>
+      <div class="score-verdict {{ css }}">{{ label }}</div>
+      <!-- f-string representation -->
+      <code class="score-fstring">f"Your Score: { score } / { total }"</code>
+    </div>
+
+    <!-- Progress bar -->
+    <div class="results-progress-wrap">
+      <div class="results-progress-bar">
+        <div class="results-progress-fill results-fill--{{ css }}"
+             style="width: {{ (score / total * 100) | round }}%"></div>
+      </div>
+      <span class="results-pct">{{ (score / total * 100) | round | int }}%</span>
+    </div>
+
+    <!-- IPOS: STORAGE phase — per-question breakdown -->
+    <div class="ipos-label">STORAGE PHASE — Session State Breakdown</div>
+    <div class="breakdown">
+      {% for r in results %}
+        <div class="breakdown-row {% if r.is_correct %}row-correct{% else %}row-wrong{% endif %}">
+          <div class="brow-icon">{{ '✔' if r.is_correct else '✘' }}</div>
+          <div class="brow-content">
+            <div class="brow-q">{{ r.question }}</div>
+            <div class="brow-meta">
+              <span class="brow-category">{{ r.category }}</span>
+              <span class="brow-your">You: "{{ r.user_answer or '(blank)' }}"</span>
+              {% if not r.is_correct %}
+                <span class="brow-correct">✔ {{ r.correct_answer }}</span>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+
+    <!-- Learning panel -->
+    <div class="learn-panel">
+      <div class="learn-title">⚙ What this project taught (Quality Standard)</div>
+      <div class="learn-grid">
+        <div class="learn-item">
+          <div class="learn-head">✅ Logic Consistency</div>
+          <code>if correct: score += 1<br>else: # score unchanged</code>
+          <p>Every path is handled. No silent logic gaps.</p>
+        </div>
+        <div class="learn-item">
+          <div class="learn-head">✅ Whitespace Audit</div>
+          <code>answer.strip()</code>
+          <p>Removes accidental leading/trailing spaces from every answer.</p>
+        </div>
+        <div class="learn-item">
+          <div class="learn-head">✅ Data Normalization</div>
+          <code>answer.lower()</code>
+          <p>"Paris", "PARIS", "paris" all evaluate identically.</p>
+        </div>
+        <div class="learn-item">
+          <div class="learn-head">✅ Type Integrity</div>
+          <code>score = 0  # integer</code>
+          <p>Integer math guaranteed. Score never becomes a string.</p>
+        </div>
+        <div class="learn-item">
+          <div class="learn-head">✅ Output Clarity</div>
+          <code>f"Score: {score}/{total}"</code>
+          <p>f-string interpolation dynamically injects runtime values.</p>
+        </div>
+        <div class="learn-item">
+          <div class="learn-head">✅ IPOS Architecture</div>
+          <code>Input → Process → Output → Storage</code>
+          <p>Each request maps to exactly one IPOS phase.</p>
+        </div>
+      </div>
+    </div>
+
+    <a href="/" class="btn-restart">↩ Play Again</a>
+
+    <!-- IPOS Bar -->
+    <div class="ipos-bar">
+      <span class="ipos-step">INPUT</span>
+      <span class="ipos-arrow">→</span>
+      <span class="ipos-step">PROCESS</span>
+      <span class="ipos-arrow">→</span>
+      <span class="ipos-step">OUTPUT</span>
+      <span class="ipos-arrow">→</span>
+      <span class="ipos-step ipos-active">STORAGE</span>
+    </div>
+
+  </div>
+</div>
+</body>
+</html>
