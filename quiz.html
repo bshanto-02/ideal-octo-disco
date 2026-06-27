@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Q{{ q_num }} — DecodeLabs Quiz</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<div class="page">
+  <div class="quiz-card">
+
+    <!-- Header -->
+    <div class="quiz-header">
+      <div class="quiz-brand">🧠 DecodeLabs Quiz</div>
+      <div class="quiz-score-live">Score: <strong>{{ score }}</strong></div>
+    </div>
+
+    <!-- Progress -->
+    <div class="progress-wrap">
+      <div class="progress-meta">
+        <span>Question {{ q_num }} of {{ total }}</span>
+        <span>{{ progress_pct }}% complete</span>
+      </div>
+      <div class="progress-bar">
+        <div class="progress-fill" style="width: {{ progress_pct }}%"></div>
+      </div>
+    </div>
+
+    <!-- Question Block -->
+    <div class="question-block">
+      <div class="q-eyebrow">
+        <span class="q-num">Q{{ q_num }}</span>
+        <span class="q-category">{{ question.category }}</span>
+      </div>
+      <h2 class="q-text">{{ question.question }}</h2>
+    </div>
+
+    <!-- IPOS: INPUT phase -->
+    <div class="ipos-label">INPUT PHASE — Step 1: Ask & Capture</div>
+    <form action="/quiz" method="POST" class="answer-form">
+      <input
+        type="text"
+        name="answer"
+        class="answer-input"
+        placeholder="Type your answer here…"
+        autocomplete="off"
+        autofocus
+        required
+      />
+      <button type="submit" class="btn-submit">Submit Answer →</button>
+    </form>
+
+    <div class="sanitize-note">
+      Your answer will be sanitized: <code>.strip().lower()</code> — spacing and capitalisation won't affect your score.
+    </div>
+
+    <!-- IPOS Bar -->
+    <div class="ipos-bar">
+      <span class="ipos-step ipos-active">INPUT</span>
+      <span class="ipos-arrow">→</span>
+      <span class="ipos-step">PROCESS</span>
+      <span class="ipos-arrow">→</span>
+      <span class="ipos-step">OUTPUT</span>
+      <span class="ipos-arrow">→</span>
+      <span class="ipos-step">STORAGE</span>
+    </div>
+
+  </div>
+</div>
+</body>
+</html>
